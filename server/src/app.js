@@ -1,5 +1,5 @@
-require("./strategies/discord");
 require("dotenv").config();
+require("./strategies/discord");
 const express = require("express");
 const session = require("express-session");
 const routes = require("./routes/index");

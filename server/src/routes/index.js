@@ -6,6 +6,6 @@ const paymentsRoutes = require("./payments");
 const router = Router();
 
 router.use("/auth", authRoutes);
-route.use("/payments", paymentsRoutes);
+router.use("/payments", paymentsRoutes);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const passport = require("passport");
 
 const router = Router();
 
@@ -7,9 +8,15 @@ router.get("/status", (req, res) => {
 });
 
 // api/auth/discord
-router.get("/discord", (req, res) => {});
+router.get("/discord", passport.authenticate("discord"));
 
 // api/auth/discord/redirect
-router.get("/discord/redirect", (req, res) => {});
+router.get(
+  "/discord/redirect",
+  passport.authenticate("discord"),
+  (req, res) => {
+    res.send(200);
+  }
+);
 
 module.exports = router;
