@@ -1,0 +1,12 @@
+const { Router } = require("express");
+
+const router = Router();
+
+router.get("/", (req, res) => {
+  res.send({
+    msg: "Payments Router",
+    status: 200,
+  });
+});
+
+module.exports = router;

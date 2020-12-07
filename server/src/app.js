@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const routes = require("./routes/index");
 const app = express();
 
 const PORT = process.env.PORT || 3001;
@@ -19,16 +20,6 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  if (req.session.authenticated) {
-    res.send({ status: 200, session: req.session, id: req.sessionID });
-  } else {
-    req.session.authenticated = {
-      username: "hello",
-    };
-    res.send({ status: 200, session: req.session, id: req.sessionID });
-  }
-  res.send(200);
-});
+app.use("/api", routes);
 
 app.listen(PORT, () => console.log(`Listening to request on port ${PORT}`));
