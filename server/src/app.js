@@ -1,6 +1,9 @@
+require("./strategies/discord");
+require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const routes = require("./routes/index");
+const passport = require("passport");
 const app = express();
 
 const PORT = process.env.PORT || 3001;
@@ -19,6 +22,9 @@ app.use(
     secret: "basjhdbasjhasdbasjdbasduh",
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api", routes);
 
