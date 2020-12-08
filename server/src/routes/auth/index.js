@@ -4,7 +4,10 @@ const passport = require("passport");
 const router = Router();
 
 router.get("/status", (req, res) => {
-  res.send(200);
+  res.send({
+    user: req.user,
+    sessionID: req.sessionID,
+  });
 });
 
 // api/auth/discord
