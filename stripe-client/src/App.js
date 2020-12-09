@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import PaymentPage from "./pages/PaymentPage";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripe = loadStripe("pk_test_tX7qfen4ofHddKN2ynJfl7X7");
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Switch>
+          <Route path="/login" exact={true} component={LoginPage} />
+          <Route path="/payment" exact={true}>
+            <Elements stripe={stripe}>
+              <PaymentPage />
+            </Elements>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
