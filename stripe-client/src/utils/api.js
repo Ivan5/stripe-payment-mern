@@ -6,3 +6,10 @@ const CREDENTIALS = {
 
 export const getAuthStatus = () =>
   axios.get("http://localhost:3001/api/auth/status", CREDENTIALS);
+
+export const sendPaymentMethod = (data) =>
+  axios.post(
+    "http://localhost:3001/api/payments/methods/create",
+    data,
+    CREDENTIALS
+  );

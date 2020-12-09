@@ -5,6 +5,7 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { sendPaymentMethod } from "../utils/api";
 
 function StripeForm() {
   const [error, setError] = useState(null);
@@ -20,6 +21,9 @@ function StripeForm() {
     } else {
       setError(null);
       console.log(result.paymentMethod);
+      sendPaymentMethod({ id: result.paymentMethod.id })
+        .then(({ data }) => console.log(data))
+        .catch((err) => console.log(err));
     }
   };
 

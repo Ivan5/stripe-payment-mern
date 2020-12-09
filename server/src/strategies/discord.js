@@ -1,6 +1,7 @@
 const passport = require("passport");
 const { Strategy } = require("passport-discord");
 const User = require("../database/models/User");
+const { createStripeCustomer } = require("../utils/stripe");
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -31,9 +32,13 @@ passport.use(
         const userDB = await User.findOne({ discordId: id });
         if (!userDB) {
           console.log("User was not found. Creating...");
+          const stripeCustomer = await createStripeCustomer({ email });
           const newUser = await User.create({
             id,
             email,
+            customer: {
+              stripeId: stripeCustomer.id,
+            },
           });
           return done(null, newUser);
         }
