@@ -2,20 +2,20 @@ const passport = require("passport");
 const { Strategy } = require("passport-discord");
 const User = require("../database/models/User");
 
-passport.serializeUser( (user,done)  => {
-  done(null, user.id)
-})
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 
 passport.deserializeUser(async (id, done) => {
-  console.log(id)
+  console.log("Deserializing User");
   try {
-    const userDB = await User.findOne({ id })
-    return userDB ? done(null, userDB) : done(null,null)
-  } catch (error) {
-    console.log(error)
-    done(error, null)
+    const userDB = await User.findOne({ id });
+    return userDB ? done(null, userDB) : done(null, null);
+  } catch (err) {
+    console.log(err);
+    return done(err, null);
   }
-})
+});
 
 passport.use(
   new Strategy(
@@ -25,21 +25,21 @@ passport.use(
       callbackURL: process.env.DISCORD_CALLBACK_URL,
       scope: ["email", "identify"],
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       const { email, id } = profile;
       try {
-        const userDB = await User.findOne({discordId: id })
+        const userDB = await User.findOne({ discordId: id });
         if (!userDB) {
-          console.log('User was not found. Creating...')
+          console.log("User was not found. Creating...");
           const newUser = await User.create({
             id,
-            email
-          })
-          return done(null,newUser)
+            email,
+          });
+          return done(null, newUser);
         }
-        return done(null, userDB)
+        return done(null, userDB);
       } catch (error) {
-        return done(err, nll)
+        return done(err, nll);
       }
     }
   )

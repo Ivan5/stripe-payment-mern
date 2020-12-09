@@ -4,10 +4,7 @@ const passport = require("passport");
 const router = Router();
 
 router.get("/status", (req, res) => {
-  res.send({
-    user: req.user,
-    sessionID: req.sessionID,
-  });
+  return req.user ? res.send(req.user) : res.sendStatus(401);
 });
 
 // api/auth/discord
@@ -18,7 +15,7 @@ router.get(
   "/discord/redirect",
   passport.authenticate("discord"),
   (req, res) => {
-    res.send(200);
+    res.redirect("http://localhost:3000/payment");
   }
 );
 

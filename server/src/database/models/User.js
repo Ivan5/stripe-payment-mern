@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CustomerSchema = new mongoose.Schema({
   stripeId: {
-    tupe: String,
+    type: String,
     required: true,
   },
   subscriptionId: {
@@ -13,13 +13,16 @@ const CustomerSchema = new mongoose.Schema({
     type: Date,
     required: false,
   },
+  defaultPaymentId: {
+    type: String,
+    required: false,
+  },
 });
 
 const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   id: {
     type: String,
@@ -28,6 +31,7 @@ const UserSchema = new mongoose.Schema({
   customer: {
     type: CustomerSchema,
     default: null,
+    required: false,
   },
 });
 

@@ -3,6 +3,7 @@ require("./strategies/discord");
 const express = require("express");
 const session = require("express-session");
 const SessionStore = require("connect-mongo");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const routes = require("./routes/index");
 const passport = require("passport");
@@ -22,6 +23,14 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+//cors
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
 
 // Registering Session Middleware
 app.use(
